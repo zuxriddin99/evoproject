@@ -27,7 +27,7 @@
 {% load socialaccount %}
 {% if user.is_authenticated %}
     <h2>You are already logged in </h2>
-   <a href="{% url 'account:main' %}"> <h3>Visit the blog </h3></a>
+   <a href="{% url 'articles:posts' %}"> <h3>Visit the blog </h3></a>
 {% else %}
     <h2>You are not logged in.<br>Please <a href="{% url 'account:register' %}">register</a> or <a
             href="{% url 'account:login' %}">login</a></h2>

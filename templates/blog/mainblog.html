@@ -5,36 +5,33 @@
 {% block mainblog %}
     <br>
     <div>
-        <div class="card" style="width: 80%; border: 2px solid black ;margin: auto">
-            <div style="border-bottom: 2px solid black; text-align: center">
-                {% for post in posts %}
+        {% for post in posts %}
+            <div class="card" style="width: 80%; border: 2px solid black ;margin: auto">
+                <div style="border-bottom: 2px solid black; text-align: center">
+
 
                     {% include 'blog/post_short.html' %}
-                {% endfor %}
-            </div>
-            <div style="margin: auto; border: 5px; padding: 2%">
-                <img src="{% static '1.png' %}" class="card-img-top" style="width: 100px; height: 100px;" alt="...">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                <div>
-                    <form class="input-group">
-                        <input type="text" class="form-control form-control-sm" placeholder="Comment"
-                               aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-sm btn-outline-white my-0" type="button">Send</button>
-                        </div>
-                    </form>
-                </div>
-                <div style="text-align: right">
-                    <a href="#"><i class="fas fa-thumbs-up"></i></a>
-                    <a href="#"><i class="fas fa-bookmark"></i></a>
+
+
                 </div>
 
-            </div>
-        </div>
+                <div class="card-body">
+
+                    <div>
+                        <form class="input-group">
+                            <input type="text" class="form-control form-control-sm" placeholder="Comment"
+                                   aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-sm btn-outline-white my-0" type="button">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="text-align: right">
+                        <a href="#"><i class="fas fa-thumbs-up"></i></a>
+                        <a href="#"><i class="fas fa-bookmark"></i></a>
+                    </div>
+
+                </div>
+            </div>{% endfor %}
     </div>
 {% endblock %}
