@@ -3,16 +3,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   {% block title %}
+    {% block title %}
 
-   {% endblock title%}
+    {% endblock title %}
 
 </head>
-<body>
-{% include 'index.html' %}
-{% block content %}
 
-{% endblock content %}
+<style>
+    .body {
+        background-image: url('https://images.pexels.com/photos/1363876/pexels-photo-1363876.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+        background-repeat: no-repeat;
+    }
+
+    h1, h2,h3 {
+        text-align: center;
+        font-style: oblique;
+        background-color: #07b9ff;
+    }
+</style>
+<body class="body">
+
+<h1>Welcome my first blog </h1>
+{% load socialaccount %}
+{% if user.is_authenticated %}
+    <h2>You are already logged in </h2>
+   <a href="{% url 'account:main' %}"> <h3>Visit the blog </h3></a>
+{% else %}
+    <h2>You are not logged in.<br>Please <a href="{% url 'account:register' %}">register</a> or <a
+            href="{% url 'account:login' %}">login</a></h2>
+
+{% endif %}
+
 
 </body>
+
+
 </html>
