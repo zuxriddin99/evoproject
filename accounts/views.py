@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
+from django.views.generic import TemplateView
+
 from .forms import CreateUserForm
 from django.contrib import messages
 
@@ -45,3 +47,6 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('account:mainpage')
+
+
+# class DescriptionView(TemplateView):

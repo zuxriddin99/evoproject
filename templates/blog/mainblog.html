@@ -5,6 +5,14 @@
 {% block mainblog %}
     <br>
     <div>
+
+        <div>
+            <form action="" method="POST" >
+                {{ form.media }}
+                {{ form.as_p }}
+            </form>
+        </div>
+
         {% for post in posts %}
             <div class="card" style="width: 80%; border: 2px solid black ;margin: auto">
                 <div style="border-bottom: 2px solid black; text-align: center">
