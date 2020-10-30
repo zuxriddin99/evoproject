@@ -22,16 +22,15 @@ class ArticleCreateView(CreateView):
     template_name = 'blog/create_post_page.html'
 
 
-class ArticleDetailView(DetailView, ):
+class ArticleDetailView(DetailView):
     model = Article
 
     template_name = 'blog/article_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['article'] = Article.objects.all()
+        context['articles'] = Article.objects.all()
         return context
-
 
 
 def add_comment_to_aticle(request, pk):
@@ -45,4 +44,4 @@ def add_comment_to_aticle(request, pk):
             comment.save()
     else:
         form = ArticleCommentForm()
-    return render(request, 'blog/article_comment.html', {'form': form})
+    return render(request, 'blog/article_detail.html', {'form': form})

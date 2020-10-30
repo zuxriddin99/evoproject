@@ -15,5 +15,5 @@ urlpatterns = [
     path('add_article/', views.ArticleCreateView.as_view(), name='add_article'),
 
     path('<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
-    path('<int:pk>/', add_comment_to_aticle, name='article_comment')
+    path('<int:pk>/', add_comment_to_aticle, name='article_comment'),
 ]

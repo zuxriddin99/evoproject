@@ -44,7 +44,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=200, blank=True, unique=True)
 
     description = RichTextUploadingField(blank=True, null=True)
-    tag = models.ManyToManyField(Tag, related_name='tags', blank=True, null=True)
+    tag = models.ManyToManyField(Tag, related_name='tags', blank=True)
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
