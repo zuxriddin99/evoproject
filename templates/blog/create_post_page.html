@@ -1,3 +1,4 @@
+{% extends 'blog/heder_footer.html' %}
 {% load static %}
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
@@ -5,9 +6,10 @@
       href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css' %}"/>
 <script src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
 
-
+{% block mainblog %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit">
 </form>
+{% endblock %}

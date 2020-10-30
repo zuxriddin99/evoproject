@@ -8,13 +8,17 @@
           href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css' %}"/>
     <script src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
 
-    <div><h1>zux</h1>
-        <form action="" method="POST" enctype=“multipart/form-data”>
-            {{ form.media|safe }}
-            {{ form.as_p }}
-        </form>
+    <div><h1>{{ user.username }}</h1>
+{#        <form action="" method="POST" enctype=“multipart/form-data”>#}
+{#            {{ form.media|safe }}#}
+{#            {{ form.as_p }}#}
+{#        </form>#}
 <h1>rid</h1>
-
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit">#}
+{#</form>#}
     </div>
 
 
@@ -94,12 +98,12 @@
         </div>
     </form>
     <div>
-        <p>{{ post.body|safe }}</p>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
-        </form>
+{#        <p>{{ post.body|safe }}</p>#}
+{#        <form method="post">#}
+{#            {% csrf_token %}#}
+{#            {{ form.media }}#}
+{#            {{ form.as_p }}#}
+{#            <input type="submit" value="Save">#}
+{#        </form>#}
     </div>
 {% endblock %}

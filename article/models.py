@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
 from pytils.translit import slugify
@@ -8,18 +9,30 @@ from pytils.translit import slugify
 # Create your models here.
 
 class Categotry(MPTTModel):
+    ## for categories
     name = models.CharField(max_length=100, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
 class Tag(models.Model):
     tag = models.CharField(max_length=200, blank=True, null=True)
+    slug = models.SlugField(max_length=200, blank=True, unique=True)
 
     def __str__(self):
         return self.tag
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not self.slug:
+            self.slug = '%s-%s' % (self.id, slugify(self.tag))
+            self.save(update_fields=['slug'])
 
 
 class Article(models.Model):
@@ -27,10 +40,11 @@ class Article(models.Model):
 
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, null=True)
+    category = models.ForeignKey(Categotry, blank=True, null=True, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=200, blank=True, unique=True)
 
     description = RichTextUploadingField(blank=True, null=True)
-    tag = models.ManyToManyField(Tag, related_name='tags', blank=True)
+    tag = models.ManyToManyField(Tag, related_name='tags', blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
@@ -42,9 +56,10 @@ class Article(models.Model):
     #     super().save(**kwargs)
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         if not self.slug:
             self.slug = '%s-%s' % (self.id, slugify(self.title))
-        super().save(*args, **kwargs)
+            self.save(update_fields=['slug'])
 
     class Meta:
         verbose_name = 'Article'
@@ -53,12 +68,37 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    #### for only post
+    def get_absolute_url(self):
+        return reverse('articles:article_detail', kwargs={'pk': str(self.pk)})
 
-class PostLike(models.Model):
+
+class ArticleLike(models.Model):
     post = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
 
-class PostFavourite(models.Model):
+class ArticleFavourite(models.Model):
     post = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+
+class ChatForUser(models.Model):
+    message_sender = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='chatforuser')
+    message_receiver = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='message_sender')
+    text = models.TextField()
+    send_time = models.DateTimeField(auto_now_add=True)
+
+
+class ArticleComment(MPTTModel):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    article_comment = models.TextField()
+
+    class Meta:
+        verbose_name = 'ArticleComment'
+        verbose_name_plural = 'ArticleComments'
+
+    def __str__(self):
+        return self.article_comment

@@ -1,5 +1,5 @@
-
 {% extends 'blog/heder_footer.html' %}
+{% load static %}
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 <link rel="stylesheet"
@@ -9,10 +9,11 @@
 {% block mainblog %}
     <div>
         <h1>{{ article.title }}</h1>
-        
+        <div> {{ article.description }}</div>
+    {{ article.c }}
 
-        
+
     </div>
 
-    
+
 {% endblock %}
