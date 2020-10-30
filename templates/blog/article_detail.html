@@ -18,11 +18,14 @@
             <div class="card-body">
 
                 <div>
-                    <form method="post">
+                    <form method="post" action="{% url 'articles:article_comment' article.pk %}">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type="submit">
                     </form>
+
+                </div>
+                <div>
 
                 </div>
                 <div style="text-align: right">
