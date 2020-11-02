@@ -1,6 +1,5 @@
 from ckeditor.widgets import CKEditorWidget
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from django.forms import ModelForm, forms
+
 from django import forms
 from .models import Article, ArticleComment
 
@@ -11,10 +10,10 @@ class NewsForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ['category', 'title', 'description', 'tag', 'show', 'moderator']
 
 
 class ArticleCommentForm(forms.ModelForm):
     class Meta:
         model = ArticleComment
-        fields = ('owner', 'article_comment')
+        fields = ('article_comment', 'parent')

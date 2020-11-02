@@ -14,8 +14,9 @@ urlpatterns = [
 
     path('', TemplateView.as_view(template_name="blog/heder_footer.html"), name='blog'),
     path('<int:pk>/', add_comment_to_aticle, name='article_comment'),
-    path('add_article/', views.ArticleCreateView.as_view(), name='add_article'),
+    path('add-article/', views.ArticleCreateView.as_view(), name='add_article'),
 
     path('article-detail/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
-    path('comment_add/<int:pk>/', add_comment_to_aticle, name='article_comment'),
+    path('comment-add/<int:pk>/', add_comment_to_aticle, name='article_comment'),
+    path('comment-view/<int:pk>/', views.CommentView, name='article_views'),
 ]

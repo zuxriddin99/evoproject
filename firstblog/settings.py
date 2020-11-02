@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'accounts',
     'article',
-
+    'hitcount',              ## for count views in post, comment etc
     'ckeditor',
     'ckeditor_uploader',
 
@@ -177,7 +177,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 

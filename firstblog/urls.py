@@ -24,7 +24,7 @@ urlpatterns = [
     path('articles/', include('article.urls', namespace='articles')),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-
+    path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

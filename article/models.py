@@ -1,9 +1,11 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor_uploader.fields import RichTextUploadingField
 from pytils.translit import slugify
+from hitcount.models import HitCountMixin, HitCount
 
 
 # Create your models here.
@@ -35,7 +37,7 @@ class Tag(models.Model):
             self.save(update_fields=['slug'])
 
 
-class Article(models.Model):
+class Article(models.Model, HitCountMixin):
     """ Список статей """
 
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -49,6 +51,8 @@ class Article(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
     moderator = models.BooleanField(default=True)
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
+                                        related_query_name='hit_count_generic_relation')
 
     # def save(self, **kwargs):
     #     if not self.slug:
@@ -74,27 +78,35 @@ class Article(models.Model):
 
 
 class ArticleLike(models.Model):
-    post = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    number_of_like = models.PositiveIntegerField(default=0)
+
+
+class ArticleView(models.Model):
+    article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    number_of_view = models.PositiveIntegerField(default=0)
 
 
 class ArticleFavourite(models.Model):
-    post = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
 
 class ChatForUser(models.Model):
-    message_sender = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='chatforuser')
-    message_receiver = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='message_sender')
+    message_sender = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='message_sender')
+    message_receiver = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='message_receiver')
     text = models.TextField()
     send_time = models.DateTimeField(auto_now_add=True)
 
 
 class ArticleComment(MPTTModel):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name="comments", on_delete=models.CASCADE)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     article_comment = models.TextField()
+    add_comment_date = models.DateTimeField(auto_now_add=True, )
 
     class Meta:
         verbose_name = 'ArticleComment'
