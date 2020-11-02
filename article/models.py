@@ -54,11 +54,6 @@ class Article(models.Model, HitCountMixin):
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
                                         related_query_name='hit_count_generic_relation')
 
-    # def save(self, **kwargs):
-    #     if not self.slug:
-    #         self.slug = slugify(self.title)
-    #     super().save(**kwargs)
-
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if not self.slug:
@@ -72,7 +67,7 @@ class Article(models.Model, HitCountMixin):
     def __str__(self):
         return self.title
 
-    #### for only post
+    #### for only article
     def get_absolute_url(self):
         return reverse('articles:article_detail', kwargs={'pk': str(self.pk)})
 

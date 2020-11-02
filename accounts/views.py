@@ -22,7 +22,7 @@ def registerPage(request):
                 return redirect('account:login')
 
         context = {'form': form}
-        return render(request, 'registr_page/registr.html', context)
+        return render(request, 'register_page/register.html', context)
 
 
 def loginPage(request):
@@ -41,7 +41,7 @@ def loginPage(request):
             else:
                 messages.info(request, 'Username or Password wrong')
         context = {}
-        return render(request, 'registr_page/login.html', context)
+        return render(request, 'register_page/login.html', context)
 
 
 def logoutUser(request):

@@ -1,6 +1,7 @@
 
 
-{% extends 'blog/heder_footer.html' %}
+{% extends 'navbar.html' %}
+{% load hitcount_tags %}
 {% load static %}
 {% block mainblog %}
     <br>
@@ -18,7 +19,7 @@
                 <div style="border-bottom: 2px solid black; text-align: center">
 
 
-                    {% include 'blog/post_short.html' %}
+                    {% include 'article/post_short.html' %}
 
                     <p style="text-align: right; margin-right: 6px">{{ article.created_time }}</p>
                 </div>
@@ -26,7 +27,7 @@
                 <div class="card-body">
 
                     <div style="text-align: left" >
-                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-eye"></i><p>{% get_hit_count for article %}</p>
 
                     </div>
                     <div style="text-align: right">

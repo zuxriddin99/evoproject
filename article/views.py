@@ -11,7 +11,7 @@ from django.views.generic import DetailView, ListView, TemplateView, CreateView
 class ArticleListView(ListView):
     ### to display article or post
     queryset = Article.objects.filter(show=True)
-    template_name = 'blog/mainblog.html'
+    template_name = 'article/mainblog.html'
     context_object_name = 'articles'
 
     def get(self, request, *args, **kwargs):
@@ -21,7 +21,7 @@ class ArticleListView(ListView):
 class ArticleCreateView(CreateView):
     ## add post or article
     form_class = NewsForm
-    template_name = 'blog/create_post_page.html'
+    template_name = 'article/create_post_page.html'
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -44,7 +44,7 @@ class ArticleCreateView(CreateView):
 class ArticleDetailView(HitCountDetailView):
     ## to display article in single page
     model = Article
-    template_name = 'blog/article_detail.html'
+    template_name = 'article/article_detail.html'
     count_hit = True
 
     # context_object_name = 'article'
@@ -77,5 +77,5 @@ def add_comment_to_aticle(request, pk):
 class CommentView(ListView):
     ## to display comment
     queryset = ArticleComment.objects.all()
-    template_name = "blog/article_detail.html"
+    template_name = "article/article_detail.html"
     context_object_name = "comment_view"

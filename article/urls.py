@@ -8,11 +8,11 @@ app_name = 'articles'
 
 urlpatterns = [
 
-    # path('main/', TemplateView.as_view(template_name="blog/mainblog.html"), name='main'),
-    # path('profile/', TemplateView.as_view(template_name="blog/profile.html"), name='profile'),
+    # path('main/', TemplateView.as_view(template_name="article/mainblog.html"), name='main'),
+    # path('profile/', TemplateView.as_view(template_name="article/profile.html"), name='profile'),
     path('post/', views.ArticleListView.as_view(), name='posts'),
 
-    path('', TemplateView.as_view(template_name="blog/heder_footer.html"), name='blog'),
+    path('', TemplateView.as_view(template_name="article/../templates/register_page/navbar.html"), name='article'),
     path('<int:pk>/', add_comment_to_aticle, name='article_comment'),
     path('add-article/', views.ArticleCreateView.as_view(), name='add_article'),
 
