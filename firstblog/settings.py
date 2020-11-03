@@ -38,7 +38,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'accounts',
     'article',
-    'hitcount',              ## for count views in post, comment etc
+
+    'hitcount',  # for count views in post, comment etc
     'ckeditor',
     'ckeditor_uploader',
 
@@ -61,7 +63,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.google',
-]
+
+)
 SITE_ID = 2
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend '

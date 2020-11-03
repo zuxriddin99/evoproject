@@ -51,6 +51,7 @@ class Article(models.Model, HitCountMixin):
     update_date = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
     moderator = models.BooleanField(default=True)
+    like = models.ManyToManyField(User, related_name='likes', blank=True)
 
     """for count views of number"""
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',

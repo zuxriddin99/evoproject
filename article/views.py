@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from hitcount.views import HitCountDetailView
 
@@ -75,7 +75,13 @@ def add_comment_to_aticle(request, pk):
 
 
 class CommentView(ListView):
-    ## to display comment
+    """to display comment"""
     queryset = ArticleComment.objects.all()
     template_name = "article/article_detail.html"
     context_object_name = "comment_view"
+
+
+def like_article(request):
+    article = get_object_or_404(Article, id=request.POST.get('article_id'))
+    article.like.add(request.user)
+    return HttpResponseRedirect(article.get_absolute_url())
