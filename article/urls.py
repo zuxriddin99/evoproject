@@ -12,7 +12,7 @@ urlpatterns = [
     # path('profile/', TemplateView.as_view(template_name="article/profile.html"), name='profile'),
     path('post/', views.ArticleListView.as_view(), name='posts'),
 
-    path('', TemplateView.as_view(template_name="article/../templates/register_page/navbar.html"), name='article'),
+    path('', TemplateView.as_view(template_name="navbar.html"), name='article'),
     path('<int:pk>/', add_comment_to_aticle, name='article_comment'),
     path('add-article/', views.ArticleCreateView.as_view(), name='add_article'),
 

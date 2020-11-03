@@ -51,7 +51,7 @@ class Article(models.Model, HitCountMixin):
     update_date = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
     moderator = models.BooleanField(default=True)
-    like = models.ManyToManyField(User, related_name='likes', blank=True)
+    like = models.ManyToManyField(User, related_name='like', blank=True)
 
     """for count views of number"""
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
@@ -66,19 +66,24 @@ class Article(models.Model, HitCountMixin):
     class Meta:
         verbose_name = 'Article'
         verbose_name_plural = 'Articles'
+        ordering = ['-created_date']
 
     def __str__(self):
         return self.title
 
+    def total_likes(self):
+        return self.like.count()
+
     """ send pk to detail page  """
+
     def get_absolute_url(self):
         return reverse('articles:article_detail', kwargs={'pk': str(self.pk)})
 
 
-class ArticleLike(models.Model):
-    article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
-    owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    number_of_like = models.PositiveIntegerField(default=0)
+# class ArticleLike(models.Model):
+#     article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
+#     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+#     number_of_like = models.PositiveIntegerField(default=0)
 
 
 class ArticleView(models.Model):

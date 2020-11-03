@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from hitcount.views import HitCountDetailView
 
+import article
 from .forms import NewsForm, ArticleCommentForm
 from .models import *
 from django.views.generic import DetailView, ListView, TemplateView, CreateView
@@ -47,15 +48,24 @@ class ArticleDetailView(HitCountDetailView):
     template_name = 'article/article_detail.html'
     count_hit = True
 
-    # context_object_name = 'article'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ArticleCommentForm()
         context.update({
+            'total_likes': self.object.total_likes()
+        })
+        context.update({
             'popular_posts': Article.objects.order_by('-hit_count_generic__hits')[:3],
+
         })
         return context
+
+
+def like_article(request):
+    article = get_object_or_404(Article, id=request.POST.get('article_id'))
+    article.like.add(request.user)
+
+    return HttpResponseRedirect(article.get_absolute_url())
 
 
 def add_comment_to_aticle(request, pk):
@@ -79,9 +89,3 @@ class CommentView(ListView):
     queryset = ArticleComment.objects.all()
     template_name = "article/article_detail.html"
     context_object_name = "comment_view"
-
-
-def like_article(request):
-    article = get_object_or_404(Article, id=request.POST.get('article_id'))
-    article.like.add(request.user)
-    return HttpResponseRedirect(article.get_absolute_url())
