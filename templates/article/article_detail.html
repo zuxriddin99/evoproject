@@ -19,21 +19,22 @@
             </div>
 
 
-            <div class="card-body" style="text-align: right;">
-                <p><i class="fas fa-eye"></i> {% get_hit_count for article %}&emsp;
+            <div class="card-body" style="text-align: left;">
+                <p><i class="fas fa-eye"></i> {% get_hit_count for article %}&emsp; </p>
+            </div>
+            <div style="text-align: right; padding: 0px 10px 0px 0px">
                 <form action="{% url 'articles:like_article' %}" method="post">
                     {% csrf_token %}
-                    {{ total_likes }}
-                    <button type="submit" name="article_id" value="{{ article.pk }}" class="btn btn-danger">like
+
+                    <button style="margin:0px 10px 0px 0px" class="btn btn-outline-info" name="article_id" value="{{ article.pk }}">
+                        <i class="fa fa-heart" aria-hidden="true">    {{ total_likes }}</i>
+                    </button>
+                    <button class="btn btn-outline-info" name="article_id" value="{{ article.pk }}">
+                        <i class="fas fa-bookmark" aria-hidden="true">    {{ total_likes }}</i>
                     </button>
 
 
                 </form>
-                <a type="submit" name="article-id" href="#"><i class="fas fa-thumbs-up"></i></a>&emsp;
-                <a href="#"><i class="fas fa-bookmark"></i></a>
-                </p>
-
-
             </div>
 
 

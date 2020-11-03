@@ -71,7 +71,7 @@ class Article(models.Model, HitCountMixin):
     def __str__(self):
         return self.title
 
-    def total_likes(self):
+    def get_total_likes(self):
         return self.like.count()
 
     """ send pk to detail page  """
@@ -80,10 +80,10 @@ class Article(models.Model, HitCountMixin):
         return reverse('articles:article_detail', kwargs={'pk': str(self.pk)})
 
 
-# class ArticleLike(models.Model):
-#     article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
-#     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-#     number_of_like = models.PositiveIntegerField(default=0)
+class ArticleLike(models.Model):
+    article = models.ForeignKey(Article, null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    number_of_like = models.PositiveIntegerField(default=0)
 
 
 class ArticleView(models.Model):

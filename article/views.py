@@ -52,7 +52,7 @@ class ArticleDetailView(HitCountDetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = ArticleCommentForm()
         context.update({
-            'total_likes': self.object.total_likes()
+            'total_likes': self.object.get_total_likes(),
         })
         context.update({
             'popular_posts': Article.objects.order_by('-hit_count_generic__hits')[:3],
