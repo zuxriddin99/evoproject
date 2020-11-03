@@ -11,7 +11,7 @@ from django.views.generic import DetailView, ListView, TemplateView, CreateView
 class ArticleListView(ListView):
     ### to display article or post
     queryset = Article.objects.filter(show=True)
-    template_name = 'article/mainblog.html'
+    template_name = 'article/article_list.html'
     context_object_name = 'articles'
 
     def get(self, request, *args, **kwargs):

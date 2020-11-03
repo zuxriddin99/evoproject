@@ -8,7 +8,7 @@ app_name = 'articles'
 
 urlpatterns = [
 
-    # path('main/', TemplateView.as_view(template_name="article/mainblog.html"), name='main'),
+    # path('main/', TemplateView.as_view(template_name="article/article_list.html"), name='main'),
     # path('profile/', TemplateView.as_view(template_name="article/profile.html"), name='profile'),
     path('post/', views.ArticleListView.as_view(), name='posts'),
 

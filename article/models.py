@@ -11,7 +11,7 @@ from hitcount.models import HitCountMixin, HitCount
 # Create your models here.
 
 class Categotry(MPTTModel):
-    ## for categories
+    """  for category """
     name = models.CharField(max_length=100, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
@@ -47,10 +47,12 @@ class Article(models.Model, HitCountMixin):
 
     description = RichTextUploadingField(blank=True, null=True)
     tag = models.ManyToManyField(Tag, related_name='tags', blank=True)
-    created_time = models.DateTimeField(auto_now_add=True)
-    update_time = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
     show = models.BooleanField(default=True)
     moderator = models.BooleanField(default=True)
+
+    """for count views of number"""
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
                                         related_query_name='hit_count_generic_relation')
 
@@ -67,7 +69,7 @@ class Article(models.Model, HitCountMixin):
     def __str__(self):
         return self.title
 
-    #### for only article
+    """ send pk to detail page  """
     def get_absolute_url(self):
         return reverse('articles:article_detail', kwargs={'pk': str(self.pk)})
 
